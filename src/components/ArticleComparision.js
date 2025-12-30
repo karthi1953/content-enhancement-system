@@ -7,7 +7,7 @@ const ArticleComparison = () => {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const API_URL = " https://content-enhancement-system-backend.onrender.com"; 
+  const API_URL = 'https://api.allorigins.win/raw?url=https://content-enhancement-system-backend.onrender.com'; 
   useEffect(() => {
     const fetchArticles = async () => {
       try {
