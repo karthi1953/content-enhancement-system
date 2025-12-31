@@ -116,7 +116,4 @@ async function runPhase2() {
   }
 }
 
-runPhase2().catch(error => {
-  console.error("Script failed:", error);
-  process.exit(1);
-});
+module.exports = { runPhase2 };
