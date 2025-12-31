@@ -55,9 +55,16 @@ async function initializeData() {
 }
 
 connectDB().then(() => {
-  if (process.env.NODE_ENV === 'production') {
-    setTimeout(initializeData, 10000);
-  }
+  console.log('✅ MongoDB connected, waiting before auto-init...');
+  
+  const waitTime = process.env.NODE_ENV === 'production' ? 30000 : 5000;
+  
+  setTimeout(() => {
+    console.log(`🚀 Starting auto-initialization after ${waitTime/1000} seconds...`);
+    initializeData().catch(err => {
+      console.error('❌ Auto-initialization failed:', err.message);
+    });
+  }, waitTime);
 });
 app.use("/api/articles", articleRoutes);
 
