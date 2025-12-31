@@ -1,18 +1,18 @@
  # Content Enhancement System
-# Live Demo
+## Live Demo
 Frontend: https://content-enhancement-system.vercel.app
 Backend API: https://content-enhancement-system.onrender.com/api/articles
 
-# Project Overview
+## Project Overview
 This is my submission for the Full Stack Web Developer Intern assignment at BeyondChats. The system automatically scrapes, enhances, and displays blog articles.
 
-# What I Built
-# ✅ Phase 1: Scraping & Database
+## What I Built
+### ✅ Phase 1: Scraping & Database
 *Scrapes the 5 oldest articles from https://beyondchats.com/blogs/
 *Stores them in MongoDB as "original" versions
 *Created full CRUD API for articles
 
-# ✅ Phase 2: AI Enhancement 
+### ✅ Phase 2: AI Enhancement 
 *For each article, searches Google using the article title
 *Gets top 2 relevant articles from search results
 *Scrapes content from those articles
@@ -20,7 +20,7 @@ This is my submission for the Full Stack Web Developer Intern assignment at Beyo
 *Saves enhanced version as "updated" with citations
 *Handles errors and blocked domains
 
-# ✅ Phase 3: React Frontend 
+### ✅ Phase 3: React Frontend 
 *Fetches articles from the backend API
 *Displays original and updated versions side-by-side
 *Responsive design works on mobile and desktop
