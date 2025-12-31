@@ -8,7 +8,7 @@ Backend API: https://content-enhancement-system.onrender.com/api/articles
 
 ## Project Overview
 This project is my submission for the Full Stack Web Developer Intern assignment at BeyondChats.  
-The system automatically scrapes, enhances, and displays blog articles.
+It is a full-stack system that automatically scrapes blog articles, enhances them using AI by referencing top-ranking external content, and presents both the original and improved versions through a clean, responsive interface.
 
 ---
 
