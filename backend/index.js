@@ -23,10 +23,13 @@ async function initializeData() {
     
     const Article = require('./models/Article');
     const articleCount = await Article.countDocuments();
-    const updatedCount = await Article.countDocuments({ version: 'updated' });
+    const originalCount = await Article.countDocuments({ version: "original" });
+    const updatedCount = await Article.countDocuments({ version: "updated" });
+    
+    console.log(` Database stats - Total: ${articleCount}, Original: ${originalCount}, Updated: ${updatedCount}`);
     
     if (articleCount === 0) {
-      console.log('🚀 Database empty, running Phase 1 + Phase 2...');
+      console.log(' Database empty, running Phase 1 + Phase 2...');
       
       const { scrapeAndSaveArticles } = require('./utils/scrapeAndSaveArticles');
       await scrapeAndSaveArticles();
@@ -36,9 +39,10 @@ async function initializeData() {
       
       console.log('✅ Data initialization complete');
       
-    } else if (updatedCount === 0) {
-      console.log(`⚠️ Found ${articleCount} original articles but NO updated versions!`);
-      console.log('🧠 Running Phase 2 only...');
+    } else if (originalCount > updatedCount) {
+      console.log(`⚠️ Found ${originalCount} original articles but only ${updatedCount} updated versions!`);
+      console.log(`🧠 Need to update ${originalCount - updatedCount} more articles...`);
+      console.log('🧠 Running Phase 2...');
       
       const { runPhase2 } = require('./utils/improveArticlesWithAI');
       await runPhase2();
@@ -46,11 +50,11 @@ async function initializeData() {
       console.log('✅ Phase 2 completed');
       
     } else {
-      console.log(`📊 Found ${articleCount} total articles (${updatedCount} updated)`);
+      console.log(`All articles updated! Found ${articleCount} total articles (${updatedCount} updated)`);
     }
     
   } catch (error) {
-    console.error('❌ Initialization error:', error.message);
+    console.error('Initialization error:', error.message);
   }
 }
 
