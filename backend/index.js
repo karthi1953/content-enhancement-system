@@ -19,28 +19,38 @@ app.use(express.json());
 // Auto initialization 
 async function initializeData() {
   try {
-    console.log('Checking if data initialization is needed...');
+    console.log('🔍 Checking if data initialization is needed...');
     
     const Article = require('./models/Article');
     const articleCount = await Article.countDocuments();
+    const updatedCount = await Article.countDocuments({ version: 'updated' });
     
     if (articleCount === 0) {
-      console.log('Running Phase 1: Article scraping...');
+      console.log('🚀 Database empty, running Phase 1 + Phase 2...');
       
       const { scrapeAndSaveArticles } = require('./utils/scrapeAndSaveArticles');
       await scrapeAndSaveArticles();
       
-      console.log('Running Phase 2: AI enhancement...');
+      const { runPhase2 } = require('./utils/improveArticlesWithAI');
+      await runPhase2();
+      
+      console.log('✅ Data initialization complete');
+      
+    } else if (updatedCount === 0) {
+      console.log(`⚠️ Found ${articleCount} original articles but NO updated versions!`);
+      console.log('🧠 Running Phase 2 only...');
       
       const { runPhase2 } = require('./utils/improveArticlesWithAI');
       await runPhase2();
       
-      console.log('Data initialization complete');
+      console.log('✅ Phase 2 completed');
+      
     } else {
-      console.log(`Found ${articleCount} articles, skipping initialization`);
+      console.log(`📊 Found ${articleCount} total articles (${updatedCount} updated)`);
     }
+    
   } catch (error) {
-    console.error('Initialization error:', error.message);
+    console.error('❌ Initialization error:', error.message);
   }
 }
 
